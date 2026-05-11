@@ -36,9 +36,13 @@ El objetivo del proyecto es facilitar la consulta rápida de información sobre 
 
 ### 1. Clonar el repositorio
 
+
+### 2. Instalar dependencias
+
 ```bash
 git clone https://github.com/pamepg23/AI-Revenue-Consultant-para-Airbnb.git
 cd AI-Revenue-Consultant-para-Airbnb
+```
 
 ### 2.  Instalar dependencias
 pip install langchain langchain-google-genai langchain-chroma chromadb gradio langchain-text-splitters striprtf
@@ -47,3 +51,27 @@ pip install langchain langchain-google-genai langchain-chroma chromadb gradio la
 Debes tener una API key de Google AI Studio.
 
 En Colab o en Python:
+
+import os
+from getpass import getpass
+
+os.environ["GOOGLE_API_KEY"] = getpass("Pega tu GOOGLE_API_KEY: ")
+
+4. Ejecutar el notebook
+Abre el archivo .ipynb en Google Colab y ejecuta las celdas en orden:
+
+Instalación de dependencias
+Configuración de API key
+Clonación del repositorio
+Carga de documentos RTF
+División de documentos
+Creación de ChromaDB
+Configuración de Gemini
+Lanzamiento de la app Gradio
+
+Link a la app desplegada
+App desplegada:https://78b54bc1244f98475d.gradio.live/
+
+Capturas de pantalla
+Pantalla principal de la appß
+
