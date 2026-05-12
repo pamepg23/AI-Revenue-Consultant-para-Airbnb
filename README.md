@@ -2,42 +2,53 @@
 
 ## Descripción del proyecto
 
-Este proyecto implementa una app de chat con sistema RAG para consultar documentos relacionados con estrategias de revenue management para Airbnb.
+AI Revenue Consultant para Airbnb es una aplicación web con inteligencia artificial que permite consultar documentos sobre estrategias de precios, limpieza, mantenimiento, descuentos y optimización de anuncios para alojamientos en Airbnb.
 
-La aplicación permite hacer preguntas en lenguaje natural sobre documentos cargados en formato `.rtf`. El sistema recupera la información más relevante desde los documentos y genera una respuesta usando Gemini. Además, cada respuesta incluye las fuentes utilizadas, mostrando el nombre del documento de donde se extrajo la información.
+El proyecto utiliza un sistema RAG para recuperar información relevante desde documentos `.rtf` y generar respuestas fundamentadas con Gemini. La app ayuda a anfitriones a tomar mejores decisiones sobre revenue management, mejorar sus anuncios y mantener estándares operativos más claros.
 
-El objetivo del proyecto es facilitar la consulta rápida de información sobre precios, temporadas, limpieza, errores en anuncios y recomendaciones para mejorar el desempeño de propiedades en Airbnb.
+Cada respuesta incluye una sección de fuentes, donde se muestran los documentos utilizados para generar la respuesta.
+
 
 ## Tecnologías utilizadas
 
 - Python
-- Google Colab
 - Gradio
 - LangChain
-- Gemini 2.5 Flash / Gemini Flash
-- Google Generative AI API
+- Gemini API
+- Gemini 2.0 Flash / Gemini 2.5 Flash
 - GoogleGenerativeAIEmbeddings
 - ChromaDB
 - striprtf
+- Hugging Face Spaces
 - GitHub
 
 ## Funcionalidades principales
 
-- Carga de documentos `.rtf` desde un repositorio de GitHub.
-- Conversión de archivos RTF a texto.
-- División de documentos en fragmentos usando LangChain.
-- Creación de una base vectorial con ChromaDB.
-- Generación de embeddings con Google Generative AI.
-- Chat con Gradio usando `gr.ChatInterface`.
-- Respuestas generadas con Gemini.
-- Inclusión obligatoria de fuentes en cada respuesta.
+- Interfaz web de chat creada con Gradio.
+- Sistema RAG usando LangChain.
+- Modelo Gemini integrado mediante API de Google.
+- Lectura de documentos `.rtf`.
+- División de documentos en fragmentos con `RecursiveCharacterTextSplitter`.
+- Base vectorial en memoria usando ChromaDB.
+- Recuperación de documentos relevantes por similitud.
+- Respuestas con fuentes obligatorias.
+- Preguntas de ejemplo para facilitar el uso de la app.
+
+## App desplegada
+
+La aplicación está disponible en Hugging Face Spaces:
+
+[https://huggingface.co/spaces/Pamelapg/AI-Revenue-Consultant-para-Airbnb](https://huggingface.co/spaces/Pamelapg/AI-Revenue-Consultant-para-Airbnb)
+
+## Repositorio
+
+Código fuente disponible en GitHub:
+
+[https://github.com/pamepg23/AI-Revenue-Consultant-para-Airbnb](https://github.com/pamepg23/AI-Revenue-Consultant-para-Airbnb)
 
 ## Instalación y ejecución local
 
 ### 1. Clonar el repositorio
-
-
-### 2. Instalar dependencias
 
 ```bash
 git clone https://github.com/pamepg23/AI-Revenue-Consultant-para-Airbnb.git
@@ -45,33 +56,52 @@ cd AI-Revenue-Consultant-para-Airbnb
 ```
 
 ### 2.  Instalar dependencias
-pip install langchain langchain-google-genai langchain-chroma chromadb gradio langchain-text-splitters striprtf
+
+pip install -r requirements.txt
+
 
 3. Configurar API Key de Google
-Debes tener una API key de Google AI Studio.
+Debes crear una API key en Google AI Studio y configurarla como variable de entorno.
 
-En Colab o en Python:
+En macOS o Linux:
+export GOOGLE_API_KEY="TU_API_KEY"
 
-import os
-from getpass import getpass
+En Windows PowerShell:
+$env:GOOGLE_API_KEY="TU_API_KEY"
 
-os.environ["GOOGLE_API_KEY"] = getpass("Pega tu GOOGLE_API_KEY: ")
+4. Ejecutar la app
+python app.py
 
-4. Ejecutar el notebook
-Abre el archivo .ipynb en Google Colab y ejecuta las celdas en orden:
+Luego abre el link local que aparece en la terminal, normalmente:
+http://127.0.0.1:7860
 
-Instalación de dependencias
-Configuración de API key
-Clonación del repositorio
-Carga de documentos RTF
-División de documentos
-Creación de ChromaDB
-Configuración de Gemini
-Lanzamiento de la app Gradio
+Estructura del proyecto
 
-Link a la app desplegada
-App desplegada:https://78b54bc1244f98475d.gradio.live/
+AI-Revenue-Consultant-para-Airbnb/
+├── app.py
+├── requirements.txt
+├── README.md
+├── documents/
+│   ├── CONSEJOS REALES PARA PRECIOS EN AIRBNB.rtf
+│   ├── Errores en el Anuncio.rtf
+│   ├── Estrategia de Precios para Temporada Alta.rtf
+│   └── ...
+└── rag_gemini_airbnb.ipynb
 
 Capturas de pantalla
-Pantalla principal de la appß
+Pantalla principal con preguntas de ejemplo
 
+Respuesta sobre estrategia de descuentos con fuentes
+
+Respuesta sobre precios en temporada alta con fuentes
+
+Ejemplos de preguntas
+¿Qué estrategia de descuentos puedo usar para conseguir más reservas sin afectar demasiado mis ingresos?
+¿Qué estándares de limpieza debe seguir un anfitrión para mejorar la experiencia del huésped?
+Según los documentos, ¿cómo debo ajustar mis precios en temporada alta para mejorar la ocupación y mantener buenos ingresos?
+
+Nota sobre límites de API
+La app utiliza la API de Gemini. Si se alcanza la cuota gratuita disponible, puede aparecer temporalmente un error de límite de uso. En ese caso, se debe esperar a que la cuota se restablezca o usar una API key con mayor disponibilidad.
+
+Autora
+Proyecto desarrollado por Pamela Paniagua Gomez
