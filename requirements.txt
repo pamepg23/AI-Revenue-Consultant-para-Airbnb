@@ -1,0 +1,14 @@
+# Interfaz web
+gradio
+
+# LangChain y RAG
+langchain
+langchain-google-genai
+langchain-chroma
+langchain-text-splitters
+
+# Base vectorial
+chromadb
+
+# Lectura de archivos RTF
+striprtf
