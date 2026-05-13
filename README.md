@@ -89,11 +89,10 @@ AI-Revenue-Consultant-para-Airbnb/
 └── rag_gemini_airbnb.ipynb
 
 Capturas de pantalla
-Pantalla principal con preguntas de ejemplo
+![Preguntas de ejemplo](screenshots/preguntas-ejemplo.png)
+![Respuesta sobre descuentos](screenshots/respuesta-descuentos.png)
+![Respuesta sobre temporada alta](screenshots/respuesta-temporada-alta.png)
 
-Respuesta sobre estrategia de descuentos con fuentes
-
-Respuesta sobre precios en temporada alta con fuentes
 
 Ejemplos de preguntas
 ¿Qué estrategia de descuentos puedo usar para conseguir más reservas sin afectar demasiado mis ingresos?
