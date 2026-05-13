@@ -10,6 +10,7 @@ from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
+import traceback
 
 
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
@@ -26,17 +27,14 @@ RTF_FOLDER = "documents"
 MODEL_NAME = "gemini-2.5-flash"
 EMBEDDING_MODEL = "models/gemini-embedding-001"
 
-CHUNK_SIZE = 1000
-CHUNK_OVERLAP = 180
-TOP_K = 4
-
+CHUNK_SIZE = 700
+CHUNK_OVERLAP = 100
+TOP_K = 2
 
 def limpiar_texto(texto: str | None) -> str:
     """Limpia y normaliza texto extraído desde archivos RTF.
-
     Args:
         texto: Texto original extraído del documento RTF. Puede ser None.
-
     Returns:
         Texto limpio, codificado en UTF-8 y sin caracteres nulos.
     """
@@ -96,8 +94,8 @@ for file_path in rtf_files:
     finally:
         print(f"Proceso terminado para: {file_path}")
         
-        if len(documents) < 1:
-            raise ValueError("No se pudo cargar ningún documento válido.")
+if len(documents) < 1:
+    raise ValueError("No se pudo cargar ningún documento válido.")      
 
 
 # =========================
@@ -129,14 +127,11 @@ def crear_vectorstore_con_reintentos(
     max_intentos: int = 5
 ) -> Chroma:
     """Crea una base vectorial ChromaDB en memoria con reintentos.
-
     Args:
         chunks: Lista de fragmentos de documentos procesados por LangChain.
         max_intentos: Número máximo de intentos si falla la creación.
-
     Returns:
         Instancia de Chroma con los documentos indexados.
-
     Raises:
         Exception: Si no se pudo crear la base vectorial tras todos los intentos.
     """
@@ -192,20 +187,18 @@ llm = ChatGoogleGenerativeAI(
 prompt = ChatPromptTemplate.from_template("""
 Eres un asistente RAG experto especializado en revenue management para Airbnb.
 Responde únicamente con base en el contexto proporcionado.
-
 Reglas obligatorias:
 1. Si la respuesta está en el contexto, responde de forma clara y precisa.
 2. Si no encuentras la respuesta en el contexto, di: "No encontré esa información en los documentos cargados."
 3. Siempre incluye una sección final llamada "Fuentes".
 4. En "Fuentes", menciona obligatoriamente el nombre del documento o documentos usados.
 5. No inventes fuentes.
-
+6. Responde de forma resumida, usando máximo 5 puntos principales.
+7. No repitas información similar entre fuentes.
 Contexto:
 {context}
-
 Pregunta:
 {question}
-
 Respuesta:
 """)
 
@@ -217,10 +210,8 @@ chain = prompt | llm | StrOutputParser()
 # =========================
 def format_docs(retrieved_docs: list[Document]) -> str:
     """Formatea documentos recuperados como contexto para el modelo.
-
     Args:
         retrieved_docs: Lista de documentos recuperados por el retriever.
-
     Returns:
         Cadena de texto con el contenido de los documentos y sus fuentes.
     """
@@ -235,10 +226,8 @@ def format_docs(retrieved_docs: list[Document]) -> str:
 
 def get_sources(retrieved_docs: list[Document]) -> list[str]:
     """Obtiene una lista única de fuentes usadas en la recuperación.
-
     Args:
         retrieved_docs: Lista de documentos recuperados por similitud.
-
     Returns:
         Lista de nombres únicos de documentos fuente.
     """
@@ -256,11 +245,9 @@ def rag_chat(
     history: list[dict[str, Any]] | list[tuple[str, str]]
 ) -> str:
     """Responde una pregunta usando recuperación aumentada por generación.
-
     Args:
         message: Pregunta enviada por el usuario desde la interfaz.
         history: Historial de conversación recibido desde Gradio.
-
     Returns:
         Respuesta generada por Gemini con una sección final de fuentes.
     """
@@ -286,10 +273,18 @@ def rag_chat(
         return response
 
     except Exception as e:
+        print("ERROR EN rag_chat:")
+        traceback.print_exc()
+
+        if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
+            return (
+                "Se alcanzó temporalmente el límite gratuito de la API de Gemini. "
+                "Intenta nuevamente en unos minutos."
+            )
+
         return (
             "Ocurrió un error temporal al procesar la pregunta. "
-            "Intenta de nuevo en unos segundos.\n\n"
-            f"Detalle técnico disponible en los logs de la app."
+            "Intenta de nuevo en unos segundos."
         )
 
     finally:
@@ -317,14 +312,14 @@ chat_interface = gr.ChatInterface(
     fn=rag_chat,
     title="Airbnb Strategic Consultant",
     description="Analista de Revenue Management con soporte RAG.",
-    chatbot=gr.Chatbot(height=500),
+    chatbot=gr.Chatbot(height=650),
     textbox=gr.Textbox(
         placeholder="Escribe aquí tu pregunta sobre precios, limpieza, anuncios o reseñas...",
         container=True,
         lines=1
     ),
-    submit_btn="Enviar",
     examples=example_questions,
+    cache_examples=False,
 )
 
 with gr.Blocks(css=custom_css) as demo:
