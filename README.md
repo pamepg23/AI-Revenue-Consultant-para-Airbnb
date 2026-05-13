@@ -49,34 +49,43 @@ Código fuente disponible en GitHub:
 ## Instalación y ejecución local
 
 ### 1. Clonar el repositorio
-
 ```bash
 git clone https://github.com/pamepg23/AI-Revenue-Consultant-para-Airbnb.git
 cd AI-Revenue-Consultant-para-Airbnb
 ```
 
 ### 2.  Instalar dependencias
-
+```bash
 pip install -r requirements.txt
+```
 
-
-3. Configurar API Key de Google
+### 3. Configurar API Key de Google
 Debes crear una API key en Google AI Studio y configurarla como variable de entorno.
 
 En macOS o Linux:
+```bash
 export GOOGLE_API_KEY="TU_API_KEY"
+```
 
 En Windows PowerShell:
-$env:GOOGLE_API_KEY="TU_API_KEY"
 
-4. Ejecutar la app
+```powershell
+$env:GOOGLE_API_KEY="TU_API_KEY"
+```
+
+### 4. Ejecutar la app
+```bash
 python app.py
+```
 
 Luego abre el link local que aparece en la terminal, normalmente:
+```text
 http://127.0.0.1:7860
+```
 
-##Estructura del proyecto
+## Estructura del proyecto
 
+```text
 AI-Revenue-Consultant-para-Airbnb/
 ├── app.py
 ├── requirements.txt
@@ -87,8 +96,9 @@ AI-Revenue-Consultant-para-Airbnb/
 │   ├── Estrategia de Precios para Temporada Alta.rtf
 │   └── ...
 └── rag_gemini_airbnb.ipynb
+```
 
-##Capturas de pantalla
+## Capturas de pantalla
 ![Preguntas de ejemplo](screenshots/preguntas-ejemplo.png)
 ![Respuesta sobre descuentos](screenshots/respuesta-descuentos.png)
 ![Respuesta sobre temporada alta](screenshots/respuesta-temporada-alta.png)
