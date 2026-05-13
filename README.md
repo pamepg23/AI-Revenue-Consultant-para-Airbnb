@@ -111,8 +111,8 @@ AI-Revenue-Consultant-para-Airbnb/
 - Según los documentos, ¿cómo debo ajustar mis precios en temporada alta para mejorar la ocupación y mantener buenos ingresos?
 
 
-##Nota sobre límites de API
+## Nota sobre límites de API
 La app utiliza la API de Gemini. Si se alcanza la cuota gratuita disponible, puede aparecer temporalmente un error de límite de uso. En ese caso, se debe esperar a que la cuota se restablezca o usar una API key con mayor disponibilidad.
 
-##Autora
+## Autora
 Proyecto desarrollado por Pamela Paniagua Gomez
