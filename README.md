@@ -75,7 +75,7 @@ python app.py
 Luego abre el link local que aparece en la terminal, normalmente:
 http://127.0.0.1:7860
 
-Estructura del proyecto
+##Estructura del proyecto
 
 AI-Revenue-Consultant-para-Airbnb/
 ├── app.py
@@ -88,19 +88,21 @@ AI-Revenue-Consultant-para-Airbnb/
 │   └── ...
 └── rag_gemini_airbnb.ipynb
 
-Capturas de pantalla
+##Capturas de pantalla
 ![Preguntas de ejemplo](screenshots/preguntas-ejemplo.png)
 ![Respuesta sobre descuentos](screenshots/respuesta-descuentos.png)
 ![Respuesta sobre temporada alta](screenshots/respuesta-temporada-alta.png)
 
 
-Ejemplos de preguntas
-¿Qué estrategia de descuentos puedo usar para conseguir más reservas sin afectar demasiado mis ingresos?
-¿Qué estándares de limpieza debe seguir un anfitrión para mejorar la experiencia del huésped?
-Según los documentos, ¿cómo debo ajustar mis precios en temporada alta para mejorar la ocupación y mantener buenos ingresos?
+## Ejemplos de preguntas
 
-Nota sobre límites de API
+- ¿Qué estrategia de descuentos puedo usar para conseguir más reservas sin afectar demasiado mis ingresos?
+- ¿Qué estándares de limpieza debe seguir un anfitrión para mejorar la experiencia del huésped?
+- Según los documentos, ¿cómo debo ajustar mis precios en temporada alta para mejorar la ocupación y mantener buenos ingresos?
+
+
+##Nota sobre límites de API
 La app utiliza la API de Gemini. Si se alcanza la cuota gratuita disponible, puede aparecer temporalmente un error de límite de uso. En ese caso, se debe esperar a que la cuota se restablezca o usar una API key con mayor disponibilidad.
 
-Autora
+##Autora
 Proyecto desarrollado por Pamela Paniagua Gomez
